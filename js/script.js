@@ -11,6 +11,8 @@ For assistance:
 
 const header = document.querySelector(".header");
 const studentList = document.querySelector(".student-list");
+const paginationDiv = document.querySelector(".pagination");
+const paginationList = document.querySelector(".link-list");
 
 const createSearchBar = () => {
   const label = document.createElement("label");
@@ -39,7 +41,7 @@ Create the `showPage` function
 This function will create and insert/append the elements needed to display a "page" of nine students
 */
 
-const showPage = (students) => {
+const showPage = (page, students) => {
   for (const student of students) {
     const li = document.createElement("li");
     const studentDetailsDiv = document.createElement("div");
@@ -76,6 +78,19 @@ Create the `addPagination` function
 This function will create and insert/append the elements needed for the pagination buttons
 */
 
+const addPagination = (students) => {
+  const numberOfButtons = Math.ceil(students.length / 9);
+  for (let i = 1; i <= numberOfButtons; i++) {
+    const li = document.createElement("li");
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = i;
+    li.appendChild(button);
+    paginationList.appendChild(li);
+  }
+};
+
 // Call functions
 createSearchBar();
-showPage(data);
+showPage(1, data);
+addPagination(data);
