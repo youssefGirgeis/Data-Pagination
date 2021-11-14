@@ -11,7 +11,6 @@ For assistance:
 
 const header = document.querySelector(".header");
 const studentList = document.querySelector(".student-list");
-const paginationDiv = document.querySelector(".pagination");
 const paginationList = document.querySelector(".link-list");
 
 const createSearchBar = () => {
@@ -42,7 +41,11 @@ This function will create and insert/append the elements needed to display a "pa
 */
 
 const showPage = (page, students) => {
-  for (const student of students) {
+  console.log(students);
+  let start = page * 9 - 9;
+  let end = page * 9;
+
+  for (let i = start; i < end; i++) {
     const li = document.createElement("li");
     const studentDetailsDiv = document.createElement("div");
     const joinedDetailsDiv = document.createElement("div");
@@ -59,12 +62,12 @@ const showPage = (page, students) => {
     email.classList.add("email");
     joinedDate.classList.add("date");
 
-    image.src = `${student.picture.large}`;
+    image.src = `${students[i].picture.large}`;
     studentDetailsDiv.appendChild(image);
-    h3.textContent = `${student.name.first} ${student.name.last}`;
+    h3.textContent = `${students[i].name.first} ${students[i].name.last}`;
     studentDetailsDiv.appendChild(h3);
-    email.textContent = `${student.email}`;
-    joinedDate.textContent = `Joined ${student.registered.date}`;
+    email.textContent = `${students[i].email}`;
+    joinedDate.textContent = `Joined ${students[i].registered.date}`;
     joinedDetailsDiv.appendChild(joinedDate);
     studentDetailsDiv.appendChild(email);
     li.appendChild(studentDetailsDiv);
@@ -94,3 +97,7 @@ const addPagination = (students) => {
 createSearchBar();
 showPage(1, data);
 addPagination(data);
+
+// document.querySelector(".link-list").addEventListener("click", function (e) {
+//   console.log(e);
+// });
