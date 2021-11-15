@@ -94,11 +94,14 @@ const addPagination = (students) => {
     li.appendChild(button);
     paginationList.appendChild(li);
   }
+  let activeButton = paginationList.firstElementChild.firstElementChild;
   paginationList.addEventListener("click", (e) => {
     if (e.target.type === "button") {
+      activeButton.classList.toggle("active");
       studentList.remove();
       showPage(e.target.textContent, students);
       e.target.classList.add("active");
+      activeButton = e.target;
     }
   });
 };
