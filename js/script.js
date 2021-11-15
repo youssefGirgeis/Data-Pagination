@@ -10,8 +10,8 @@ For assistance:
 */
 
 const header = document.querySelector(".header");
-const studentList = document.querySelector(".student-list");
 const paginationList = document.querySelector(".link-list");
+const studentList = document.createElement("ul");
 
 const createSearchBar = () => {
   const label = document.createElement("label");
@@ -54,6 +54,7 @@ const showPage = (page, students) => {
     const email = document.createElement("span");
     const joinedDate = document.createElement("span");
 
+    studentList.classList.add("student-list");
     li.classList.add("student-item", "cf");
     studentDetailsDiv.classList.add("student-details");
     joinedDetailsDiv.classList.add("joined-details");
@@ -74,6 +75,7 @@ const showPage = (page, students) => {
     li.appendChild(joinedDetailsDiv);
     studentList.appendChild(li);
   }
+  header.insertAdjacentElement("afterend", studentList);
 };
 
 /*
@@ -88,16 +90,20 @@ const addPagination = (students) => {
     const button = document.createElement("button");
     button.type = "button";
     button.textContent = i;
+    if (i === 1) button.classList.add("active");
     li.appendChild(button);
     paginationList.appendChild(li);
   }
+  paginationList.addEventListener("click", (e) => {
+    if (e.target.type === "button") {
+      studentList.remove();
+      showPage(e.target.textContent, students);
+      e.target.classList.add("active");
+    }
+  });
 };
 
 // Call functions
 createSearchBar();
 showPage(1, data);
 addPagination(data);
-
-// document.querySelector(".link-list").addEventListener("click", function (e) {
-//   console.log(e);
-// });
