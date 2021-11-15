@@ -41,9 +41,11 @@ This function will create and insert/append the elements needed to display a "pa
 */
 
 const showPage = (page, students) => {
-  console.log(students);
+  studentList.innerHTML = "";
   let start = page * 9 - 9;
   let end = page * 9;
+
+  if (end > students.length) end = students.length;
 
   for (let i = start; i < end; i++) {
     const li = document.createElement("li");
@@ -98,7 +100,6 @@ const addPagination = (students) => {
   paginationList.addEventListener("click", (e) => {
     if (e.target.type === "button") {
       activeButton.classList.toggle("active");
-      studentList.remove();
       showPage(e.target.textContent, students);
       e.target.classList.add("active");
       activeButton = e.target;
