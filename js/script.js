@@ -9,6 +9,8 @@ For assistance:
    Reach out in your Slack community: https://treehouse-fsjs-102.slack.com/app_redirect?channel=unit-2
 */
 
+let numberOfButtons = 0;
+
 const header = document.querySelector(".header");
 const paginationList = document.querySelector(".link-list");
 const studentList = document.createElement("ul");
@@ -86,7 +88,9 @@ This function will create and insert/append the elements needed for the paginati
 */
 
 const addPagination = (students) => {
-  const numberOfButtons = Math.ceil(students.length / 9);
+  paginationList.innerHTML = "";
+  numberOfButtons = Math.ceil(students.length / 9);
+
   for (let i = 1; i <= numberOfButtons; i++) {
     const li = document.createElement("li");
     const button = document.createElement("button");
@@ -128,4 +132,5 @@ inputSearch.addEventListener("keyup", (e) => {
     }
   }
   showPage(1, filteredList);
+  addPagination(filteredList);
 });
