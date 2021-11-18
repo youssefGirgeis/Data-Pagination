@@ -100,14 +100,36 @@ const addPagination = (students) => {
     li.appendChild(button);
     paginationList.appendChild(li);
   }
-  let activeButton = paginationList.firstElementChild.firstElementChild;
   paginationList.addEventListener("click", (e) => {
     if (e.target.type === "button") {
-      activeButton.classList.toggle("active");
-      showPage(e.target.textContent, students);
+      const prevActiveButton = document.querySelector("button.active");
+      prevActiveButton.classList.toggle("active");
       e.target.classList.add("active");
-      activeButton = e.target;
+      showPage(e.target.textContent, students);
     }
+  });
+};
+
+// Search feature
+const searchStudent = () => {
+  let searchedName = "";
+  let filteredList = [];
+  const inputSearch = document.getElementById("search");
+  inputSearch.addEventListener("keyup", (e) => {
+    paginationList.removeEventListener("click", addPagination);
+    filteredList = [];
+    if (e.key.length === 1) searchedName += e.key;
+    else if (e.key === "Backspace") searchedName = inputSearch.value;
+    for (const student of data) {
+      if (
+        student.name.first.toLowerCase().includes(searchedName.toLowerCase()) ||
+        student.name.last.toLowerCase().includes(searchedName.toLowerCase())
+      ) {
+        filteredList.push(student);
+      }
+    }
+    showPage(1, filteredList);
+    addPagination(filteredList);
   });
 };
 
@@ -115,22 +137,4 @@ const addPagination = (students) => {
 createSearchBar();
 showPage(1, data);
 addPagination(data);
-
-let searchedName = "";
-let filteredList = [];
-const inputSearch = document.getElementById("search");
-inputSearch.addEventListener("keyup", (e) => {
-  filteredList = [];
-  if (e.key.length === 1) searchedName += e.key;
-  else if (e.key === "Backspace") searchedName = inputSearch.value;
-  for (const student of data) {
-    if (
-      student.name.first.toLowerCase().includes(searchedName.toLowerCase()) ||
-      student.name.last.toLowerCase().includes(searchedName.toLowerCase())
-    ) {
-      filteredList.push(student);
-    }
-  }
-  showPage(1, filteredList);
-  addPagination(filteredList);
-});
+searchStudent();
