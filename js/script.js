@@ -116,15 +116,12 @@ const searchStudent = () => {
   let filteredList = [];
   const inputSearch = document.getElementById("search");
   inputSearch.addEventListener("keyup", (e) => {
-    paginationList.removeEventListener("click", addPagination);
     filteredList = [];
     if (e.key.length === 1) searchedName += e.key;
     else if (e.key === "Backspace") searchedName = inputSearch.value;
     for (const student of data) {
-      if (
-        student.name.first.toLowerCase().includes(searchedName.toLowerCase()) ||
-        student.name.last.toLowerCase().includes(searchedName.toLowerCase())
-      ) {
+      const fullName = `${student.name.first} ${student.name.last}`;
+      if (fullName.toLowerCase().includes(searchedName.toLowerCase())) {
         filteredList.push(student);
       }
     }
